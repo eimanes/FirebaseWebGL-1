@@ -26,11 +26,12 @@ A Unity package that makes use of the Firebase Javascript SDK to implement the b
   // declare other services here...
   ```
   4) Finally, make sure to also include the Firebase SDKs you need to use in your App (You can find a list of services [here](https://firebase.google.com/docs/web/learn-more#available-libraries)). The “modular” version from the SDK version 9 is not working. Use this “compat” version that works as a compatibility mode.
+  Thiss feature only can use Firebase version 8 instead of version 9
  ```
 // add this lines before the final <script> tag
 // add other firebase services as needed...
-<script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 ```
   5) EXTRA STEP: Earlier in 2021 Unity made some modifications to their WebGL library. The following line (`window.unityInstance = unityInstance`) must now also be added in your index.html, when the unityInstance is created (after the `}).then((unityInstance) => {` line) so that your app can properly comunicate with Unity.
  ```
@@ -39,6 +40,8 @@ script.onload = () => {
 		progressBarFull.style.width = 100 * progress + "%";
 	 }).then((unityInstance) => {
 		// add this line :
+    this.unityInstance = unityInstance;
+		this.firebase = firebase;
 		window.unityInstance = unityInstance;
 		loadingBar.style.display = "none";
 		// ...
