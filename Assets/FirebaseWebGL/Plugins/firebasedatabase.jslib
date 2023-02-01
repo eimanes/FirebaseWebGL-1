@@ -17,23 +17,61 @@ mergeInto(LibraryManager.library, {
         }
     },
 
-    PostJSON: function(path, value, objectName, callback, fallback) {
+    PostJSON: function(path, child1, child2, value1, value2, objectName, callback, fallback) {
         var parsedPath = UTF8ToString(path);
-        var parsedValue = UTF8ToString(value);
+        var parsedChild1 = UTF8ToString(child1);
+        var parsedChild2 = UTF8ToString(child2);
+        var parsedValue1 = UTF8ToString(value1);
+        var parsedValue2 = UTF8ToString(value2);
         var parsedObjectName = UTF8ToString(objectName);
         var parsedCallback = UTF8ToString(callback);
         var parsedFallback = UTF8ToString(fallback);
 
         try {
-
-            firebase.database().ref(parsedPath).set(JSON.parse(parsedValue)).then(function(unused) {
-                window.unityInstance.SendMessage(parsedObjectName, parsedCallback, "Success: " + parsedValue + " was posted to " + parsedPath);
+            firebase.database().ref(parsedPath).update({
+                [parsedChild1]: parsedValue1,
+                [parsedChild2]: parsedValue2
+            }).then(function(unused) {
+                window.unityInstance.SendMessage(parsedObjectName, parsedCallback, "Success: " + parsedChild1 + ": " + parsedValue1 + " and " + parsedChild2 + ": " + parsedValue2 + " were posted to " + parsedPath);
             });
+        } 
+        catch (error) {
+            window.unityInstance.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
+        }
+    },
 
+    PostGeneral: function(path, value1, value2, value3, value4, value5, value6, value7, value8, objectName, callback, fallback) {
+        var parsedPath = UTF8ToString(path);
+        var a_TokenID, b_LoginTime, c_CurrentScore, d_TotalScore, e_TS_Updated, f_TokensReq, g_TokensClaimed, h_TC_Updated;
+        var parsedValue1 = UTF8ToString(value1);
+        var parsedValue2 = UTF8ToString(value2);
+        var parsedValue3 = UTF8ToString(value3);
+        var parsedValue4 = UTF8ToString(value4);
+        var parsedValue5 = UTF8ToString(value5);
+        var parsedValue6 = UTF8ToString(value6);
+        var parsedValue7 = UTF8ToString(value7);
+        var parsedValue8 = UTF8ToString(value8);
+        var parsedObjectName = UTF8ToString(objectName);
+        var parsedCallback = UTF8ToString(callback);
+        var parsedFallback = UTF8ToString(fallback);
+
+        try {
+            firebase.database().ref(parsedPath).child("General").update({
+                a_TokenID: parsedValue1,
+                b_LoginTime: parsedValue2,
+                c_CurrentScore: parsedValue3,
+                d_TotalScore: parsedValue4,
+                e_TS_Updated: parsedValue5,
+                f_TokensReq: parsedValue6,
+                g_TokensClaimed: parsedValue7,
+                h_TC_Updated: parsedValue8,
+            });
+            
         } catch (error) {
             window.unityInstance.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
         }
     },
+    
 
     PushJSON: function(path, value, objectName, callback, fallback) {
         var parsedPath = UTF8ToString(path);

@@ -15,6 +15,7 @@ namespace FirebaseWebGL.Examples.Database
 
         public TextMeshProUGUI outputText;
 
+
         private void Start()
         {
             if (Application.platform != RuntimePlatform.WebGLPlayer)
@@ -24,7 +25,10 @@ namespace FirebaseWebGL.Examples.Database
         public void GetJSON() =>
             FirebaseDatabase.GetJSON(pathInputField.text, gameObject.name, "DisplayData", "DisplayErrorObject");
 
-        public void PostJSON() => FirebaseDatabase.PostJSON(pathInputField.text, valueInputField.text, gameObject.name,
+        public void PostJSON() => FirebaseDatabase.PostJSON(pathInputField.text, "TokenID", "Score",  valueInputField.text, amountInputField.text, gameObject.name,
+            "DisplayInfo", "DisplayErrorObject");
+
+        public void PostGeneral() => FirebaseDatabase.PostGeneral(InternalDB.nama(), InternalDB.token_id(), InternalDB.LastLogin(), InternalDB.CurrentScore().ToString(), InternalDB.TotalScore().ToString(), InternalDB.TotalScoreUpdated(), InternalDB.TokensRequested().ToString(), InternalDB.TokensClaimed().ToString(), InternalDB.TokensClaimedUpdated(), gameObject.name,
             "DisplayInfo", "DisplayErrorObject");
 
         public void PushJSON() => FirebaseDatabase.PushJSON(pathInputField.text, valueInputField.text, gameObject.name,
